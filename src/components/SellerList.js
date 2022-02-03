@@ -5,7 +5,7 @@ import { decodeToken, getToken } from 'utils';
 import { useNavigate } from 'react-router-dom';
 
 // Seller list generating component
-const SellerList = ({ list = [] }) => {
+const SellerList = ({ list = [], canBook }) => {
     const navigate = useNavigate()
     let userId;
 
@@ -28,7 +28,7 @@ const SellerList = ({ list = [] }) => {
         <ul className='w-1/2  m-auto border-solid border-2 border-slate-400 rounded-xl'>
             {
                 list.length > 0 ? (
-                    list.map((item) => <Item key={item.id} item={item} onSelect={bookAppointment(item.id)} />)
+                    list.map((item) => <Item key={item.id} item={item} onSelect={bookAppointment(item.id)} canBook={canBook} />)
                 ) : (
                     <div className='p-2'>Empty Search Results</div>)}
         </ul>
@@ -37,7 +37,7 @@ const SellerList = ({ list = [] }) => {
 
 export default SellerList;
 
-const Item = ({ item: { name, appointments = [] }, onSelect }) => {
+const Item = ({ item: { name, appointments = [] }, onSelect, canBook }) => {
     // Get today and tomorrow
     let today = new Date();
     today.setDate(today.getDate() + 1);
@@ -56,7 +56,7 @@ const Item = ({ item: { name, appointments = [] }, onSelect }) => {
                 {!available && !accepted && <label className='bg-gray-500 p-2 rounded-md' htmlFor='date'>Waiting Approval</label>}
                 {!available && accepted && <label className='bg-blue-500 p-2 rounded-md' htmlFor='date'>Approved</label>}
 
-                <input className="ml-4 border-slate-300 border p-2 m-2" disabled={!available} id="date" name="date" type="date" min={tomorrow} defaultValue={appointments?.[0]?.date.substr(0, 10) || tomorrow} onChange={onSelect} />
+                <input className="ml-4 border-slate-300 border p-2 m-2" disabled={!available || !canBook} id="date" name="date" type="date" min={tomorrow} defaultValue={appointments?.[0]?.date.substr(0, 10) || tomorrow} onChange={onSelect} />
             </div>
         </li>
     )

@@ -1,11 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { deleteToken } from "utils";
 
-const Header = ({ loggedIn, setLoggedIn, ...props }) => {
+const Header = ({ loggedIn, setLoggedIn, setType, ...props }) => {
     const navigate = useNavigate();
 
     const logout = () => {
         deleteToken();
+        setType(null);
         setLoggedIn(false);
         navigate('/');
     }

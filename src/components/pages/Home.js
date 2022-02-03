@@ -2,12 +2,14 @@ import React from 'react';
 import { useNavigate } from "react-router-dom"
 
 import LoginForm from 'components/auth/LoginForm';
+import { decodeToken } from 'utils';
 
-const Home = ({ loggedIn, setLoggedIn }) => {
+const Home = ({ loggedIn, setLoggedIn, setType }) => {
     const navigate = useNavigate()
 
     const routeToSellers = () => {
         setLoggedIn(true);
+        setType(decodeToken()?.type)
         navigate('/sellers');
     }
 
