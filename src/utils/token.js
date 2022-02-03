@@ -1,4 +1,4 @@
-import * as jose from "jose";
+import decode from "jwt-decode";
 
 export const getToken = () => {
     return JSON.parse(localStorage.getItem("token")) || null;
@@ -12,6 +12,6 @@ export const deleteToken = () => {
     localStorage.removeItem("token");
 };
 
-export const decodeToken = () => {
-    return jose.jwtDecrypt(getToken());
+export const decodeToken = async () => {
+    return await decode(getToken());
 };

@@ -5,8 +5,9 @@ import "./css/reset.css"
 import "./css/base.css"
 import "./css/layout.css"
 
-import Header from "./components/generic/Header";
+import Header from "components/generic/Header";
 import Home from "components/pages/Home";
+import Sellers from "components/pages/Sellers";
 import { getToken } from 'utils';
 
 function App() {
@@ -14,12 +15,13 @@ function App() {
 
   return (
     <>
-      <Header className="h-1/6 flex flex-row justify-between place-items-center px-10 bg-slate-300" {...{ loggedIn, setLoggedIn }} />
+      <script src="https://kit.fontawesome.com/46e61ad928.js" crossOrigin="anonymous"></script>
+      <Header className="h-fit flex flex-row justify-between place-items-center p-10 bg-slate-300 shadow-slate-500 shadow" {...{ loggedIn, setLoggedIn }} />
       {/* The basic necessary routes */}
       <main className="p-20 h-5/6">
         <Routes>
           <Route path="/" exact element={<Home {...{ loggedIn, setLoggedIn }} />} />
-          <Route path="/sellers" element={"Sellers"} />
+          <Route path="/sellers" element={<Sellers {...{ loggedIn }} />} />
           <Route path="/appointments" element={"Appointments"} />
         </Routes>
       </main>

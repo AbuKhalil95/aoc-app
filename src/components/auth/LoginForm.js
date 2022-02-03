@@ -6,7 +6,6 @@ const LoginForm = ({ onLogin }) => {
     const { onChange, handleSubmit, disabled, response } = useForm({ name: null, type: null }, "login", "post");
 
     useEffect(() => {
-        console.log(!response.e && response.token, {e: response.e, response});
         if (!response.e && response.token) {
             setToken(response.token);
             onLogin();

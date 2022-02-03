@@ -31,8 +31,6 @@ const useForm = (obj = {}, url, method = "get", isBody = false) => {
         } catch (e) {
             setResponse({ e })
         }
-
-        console.log(response);
     };
 
     useEffect(() => {
