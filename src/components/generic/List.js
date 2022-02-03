@@ -1,0 +1,1 @@
+// TODO: refactor SellerList to be generic, and enter item shape and responces as props.

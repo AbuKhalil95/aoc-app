@@ -5,14 +5,13 @@ import axios from 'axios';
 import SellerList from 'components/SellerList';
 import { decodeToken, getToken } from 'utils';
 
-const Sellers = ({ loggedIn, type }) => {
+const Sellers = ({ loggedIn, type, userId }) => {
     const [data, setData] = useState([]);
     const [filteredData, setFiltered] = useState([]);
     const navigate = useNavigate();
     const available = data.length !== 0;
     const canBook = type === "buyers";
     // TODO: Check if putting userId in a state solves the undefined race issue when passing to children
-    let userId;
 
     useEffect(async () => {
         if (!loggedIn) {
@@ -20,18 +19,18 @@ const Sellers = ({ loggedIn, type }) => {
             return navigate('/');
         }
 
-        const { id } = await decodeToken();
-        userId = id;
+        if (userId) {
 
-        const res = await axios.get(
-            `${process.env.REACT_APP_BACKEND}/appointments/available/${userId}`,
-            {
-                headers: { Authorization: `Bearer ${getToken()}` }
-            }
-        );
+            const res = await axios.get(
+                `${process.env.REACT_APP_BACKEND}/appointments/available/${userId}`,
+                {
+                    headers: { Authorization: `Bearer ${getToken()}` }
+                }
+            );
+            setData(res.data);
+        }
 
-        setData(res.data);
-    }, [])
+    }, [userId])
 
     const querySearch = (e) => {
         if (e.key === 'Enter') {
