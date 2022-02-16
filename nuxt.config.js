@@ -61,5 +61,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  server: {
+    port: "3010" // default: localhost
+  },
+  publicRuntimeConfig: {
+    backendUrl: process.env.NUXT_APP_BACKEND || 'http://localhost:3000',
   }
 }
