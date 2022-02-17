@@ -82,15 +82,13 @@ export default {
   // Listen to events emmitted on logout from layout component
   // Switch to vuex for easier reactity
   created() {
-    this.$nuxt.$on("logout", () => {
-      this.error = null;
-      this.success = false;
-      this.$router.push({
-        path: "/",
-      });
-    });
+    this.$nuxt.$on("login", async (condition) => {
+      if (!getToken()) return;
 
-    this.$nuxt.$on("login", (condition) => {
+      [this.name, this.type] = await decodeToken().then((obj) => [
+        obj.name,
+        obj.type,
+      ]);
       condition &&
         setTimeout(
           () =>

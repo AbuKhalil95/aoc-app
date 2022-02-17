@@ -13,8 +13,12 @@
         </template>
         <v-spacer></v-spacer>
         <v-btn text router to="/">Home</v-btn>
-        <v-btn v-if="this.type === 'buyers'" text router to="/sellers">Sellers</v-btn>
-        <v-btn v-if="this.type === 'sellers'" text router to="/appointments">Appointments</v-btn>
+        <v-btn v-if="this.type === 'buyers'" text router to="/sellers"
+          >Sellers</v-btn
+        >
+        <v-btn v-if="this.type === 'sellers'" text router to="/appointments"
+          >Appointments</v-btn
+        >
       </v-container>
 
       <v-switch
@@ -60,6 +64,14 @@ export default {
   // Listen to events emmitted on login from login component
   // Switch to vuex for easier reactity
   created() {
+    this.$nuxt.$on("logout", () => {
+      this.error = null;
+      this.success = false;
+      this.$router.push({
+        path: "/",
+      });
+    });
+
     this.$nuxt.$on("login", async (condition) => {
       if (condition === "fail") {
         this.name = null;
