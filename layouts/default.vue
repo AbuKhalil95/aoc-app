@@ -12,16 +12,9 @@
           <v-btn color="secondary" class="ml-6" @click="logout">logout</v-btn>
         </template>
         <v-spacer></v-spacer>
-        <v-btn
-          v-for="link in links"
-          :key="link.name"
-          text
-          :to="link.to"
-          router
-          exact
-        >
-          {{ link.name }}
-        </v-btn>
+        <v-btn text router to="/">Home</v-btn>
+        <v-btn v-if="this.type === 'buyers'" text router to="/sellers">Sellers</v-btn>
+        <v-btn v-if="this.type === 'sellers'" text router to="/appointments">Appointments</v-btn>
       </v-container>
 
       <v-switch
@@ -51,11 +44,6 @@ import { getToken, decodeToken, deleteToken } from "../utils/token";
 export default {
   data: () => ({
     lightMode: false,
-    links: [
-      { name: "Home", to: "/" },
-      { name: "Sellers", to: "/sellers" },
-      { name: "Appointments", to: "/appointments" },
-    ],
     name: null,
     type: null,
   }),

@@ -23,6 +23,7 @@
         id="user-login"
         :success="success"
         :success-messages="!!success ? 'Logged In!' : null"
+        autocomplete="off"
       ></v-text-field>
 
       <v-container class="px-0" fluid>
@@ -51,6 +52,7 @@ export default {
     success: false,
 
     name: null,
+    type: null,
     customer: "buyer",
   }),
 
@@ -83,13 +85,30 @@ export default {
     this.$nuxt.$on("logout", () => {
       this.error = null;
       this.success = false;
+      this.$router.push({
+        path: "/",
+      });
+    });
+
+    this.$nuxt.$on("login", (condition) => {
+      condition &&
+        setTimeout(
+          () =>
+            this.$router.push({
+              path: `/${this.type === "buyers" ? "sellers" : "appointments"}`,
+            }),
+          1500
+        );
     });
   },
 
   mounted: async function () {
     if (!getToken()) return;
 
-    this.name = await decodeToken().then((obj) => obj.name);
+    [this.name, this.type] = await decodeToken().then((obj) => [
+      obj.name,
+      obj.type,
+    ]);
     this.success = true;
   },
 };
