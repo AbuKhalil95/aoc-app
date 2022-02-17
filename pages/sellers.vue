@@ -1,7 +1,7 @@
 <template>
-  <v-row justify="center" align="center" style="min-height: inherit">
+  <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <Login />
+      <SellersList />
     </v-col>
   </v-row>
 </template>
