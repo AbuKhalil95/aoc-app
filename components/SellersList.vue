@@ -2,7 +2,7 @@
   <client-only placeholder="Loading...">
     <v-card class="px-0" fluid :loading="loading">
       <v-card-title> The Sellers Club </v-card-title>
-      <v-card-text v-if="list.length > 0" color="error"
+      <v-card-text v-if="list.length === 0" color="error"
         >No Seller Available At The Moment</v-card-text
       >
       <v-container>
@@ -45,17 +45,16 @@ export default {
           }
         );
 
-        await this.handleFetchAppointments();
+        await this.fetchAvailableAppointments();
       } catch (error) {
         console.log(error.message);
       }
     },
 
-    async handleFetchAppointments() {
+    async fetchAvailableAppointments() {
       this.loading = true;
       this.error = null;
       this.success = false;
-      this.id = await decodeToken().then((obj) => obj.id);
 
       try {
         const { data } = await axios.get(
@@ -79,7 +78,19 @@ export default {
         path: "/",
       });
     }
-    await this.handleFetchAppointments();
+
+    [this.id, this.type] = await decodeToken().then((obj) => [
+      obj.id,
+      obj.type,
+    ]);
+
+    if (this.type === "sellers") {
+      return this.$router.push({
+        path: "/appointments",
+      });
+    }
+    
+    await this.fetchAvailableAppointments();
   },
 };
 </script>
