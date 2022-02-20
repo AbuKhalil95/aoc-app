@@ -60,6 +60,9 @@ export default {
   props: ["seller"],
   data: () => ({
     menu: false,
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 10),
   }),
 
   computed: {
@@ -68,11 +71,6 @@ export default {
     },
     accepted: function () {
       return this.seller?.appointments?.[0]?.isAccepted || false;
-    },
-    date: function () {
-      return new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10);
     },
   },
 };
